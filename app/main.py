@@ -1,31 +1,27 @@
-from typing import List, Dict, Optional, Union
-
+from typing import List, Dict
 
 class Person:
     people: Dict[str, "Person"] = {}
 
     def __init__(self, name: str, age: int) -> None:
-        self.name: str = name
-        self.age: int = age
+        self.name = name
+        self.age = age
         Person.people[self.name] = self
 
-
-def create_person_list(people: List[Dict[str, Union[str, int, None]]]) -> List[Person]:
+def create_person_list(people: List[Dict[str, object]]) -> List[Person]:
     total_list: List[Person] = []
 
     for person in people:
-        name: str = person["name"]  # type: ignore
-        age: int = person["age"]    # type: ignore
-        person_instance = Person(name, age)
-        total_list.append(person_instance)
+        name = person["name"]
+        age = person["age"]
+        instance = Person(name, age)
+        total_list.append(instance)
 
     for person in people:
-        current_person = Person.people[person["name"]]
-        spouse_name = person.get("wife") or person.get("husband")
-        if spouse_name is not None:
-            if "wife" in person:
-                current_person.wife = Person.people[spouse_name]
-            elif "husband" in person:
-                current_person.husband = Person.people[spouse_name]
+        instance = Person.people[person["name"]]
+        if "husband" in person and person["husband"] is not None:
+            instance.husband = Person.people[person["husband"]]
+        elif "wife" in person and person["wife"] is not None:
+            instance.wife = Person.people[person["wife"]]
 
     return total_list
