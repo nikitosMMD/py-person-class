@@ -1,8 +1,5 @@
-from typing import List, Dict
-
-
 class Person:
-    people: Dict[str, "Person"] = {}
+    people: dict[str, "Person"] = {}
 
     def __init__(self, name: str, age: int) -> None:
         self.name = name
@@ -10,8 +7,8 @@ class Person:
         Person.people[self.name] = self
 
 
-def create_person_list(people: List[Dict[str, object]]) -> List[Person]:
-    total_list: List[Person] = []
+def create_person_list(people: list[dict]) -> list[Person]:
+    total_list: list[Person] = []
 
     for person in people:
         name = person["name"]
